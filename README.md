@@ -54,7 +54,7 @@ Disarankan Python **3.9 ke atas**.
 ### 2️⃣ Buka Folder Project di VS Code
 
 ```bash
-cd jump_vs_exponential
+cd tubes-AKA-main
 code .
 ```
 
@@ -82,12 +82,6 @@ venv\Scripts\activate
 
 ```bash
 pip install flask matplotlib
-```
-
-Atau jika tersedia `requirements.txt`:
-
-```bash
-pip install -r requirements.txt
 ```
 
 ---
