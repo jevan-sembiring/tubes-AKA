@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request
-import time
-import math
+import time, math
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import os
 
 app = Flask(__name__)
 
@@ -17,67 +17,48 @@ def jump_search(arr, key):
         steps += 1
         prev = step
         step += int(math.sqrt(n))
+        if prev >= n:
+            return -1, steps
 
     for i in range(prev, min(step, n)):
         steps += 1
         if arr[i] == key:
             return i, steps
-
     return -1, steps
 
 
-def binary_search_iter(arr, left, right, key):
-    steps = 0
-    while left <= right:
-        steps += 1
-        mid = (left + right) // 2
-        if arr[mid] == key:
-            return mid, steps
-        elif arr[mid] < key:
-            left = mid + 1
-        else:
-            right = mid - 1
-    return -1, steps
-
-
-def binary_search_rec(arr, left, right, key, steps):
-    if left <= right:
+def binary_search_recursive(arr, l, r, key, steps):
+    if l <= r:
+        mid = (l + r) // 2
         steps[0] += 1
-        mid = (left + right) // 2
         if arr[mid] == key:
             return mid
         elif arr[mid] > key:
-            return binary_search_rec(arr, left, mid-1, key, steps)
+            return binary_search_recursive(arr, l, mid-1, key, steps)
         else:
-            return binary_search_rec(arr, mid+1, right, key, steps)
+            return binary_search_recursive(arr, mid+1, r, key, steps)
     return -1
 
 
-def exponential_iter(arr, key):
+def exponential_iterative(arr, key):
     steps = 1
+    n = len(arr)
     if arr[0] == key:
         return 0, steps
 
     i = 1
-    while i < len(arr) and arr[i] <= key:
+    while i < n and arr[i] <= key:
         steps += 1
         i *= 2
 
-    _, bs_steps = binary_search_iter(arr, i//2, min(i, len(arr)-1), key)
-    return -1, steps + bs_steps
+    bs_steps = [steps]
+    binary_search_recursive(arr, i//2, min(i, n-1), key, bs_steps)
+    return -1, bs_steps[0]
 
 
-def exponential_rec(arr, key):
+def exponential_recursive(arr, key):
     steps = [1]
-    if arr[0] == key:
-        return 0, steps[0]
-
-    i = 1
-    while i < len(arr) and arr[i] <= key:
-        steps[0] += 1
-        i *= 2
-
-    binary_search_rec(arr, i//2, min(i, len(arr)-1), key, steps)
+    binary_search_recursive(arr, 0, len(arr)-1, key, steps)
     return -1, steps[0]
 
 @app.route("/", methods=["GET", "POST"])
@@ -90,57 +71,76 @@ def index():
 
         cases = {
             "Best Case": 1,
-            "Average Case": n // 2,
+            "Average Case": n//2,
             "Worst Case": n
         }
 
-        results = {}
+        results = []
 
         for case, key in cases.items():
             t0 = time.perf_counter_ns()
-            _, js_steps = jump_search(arr, key)
-            js_time = (time.perf_counter_ns() - t0) / 1_000_000
+            _, js = jump_search(arr, key)
+            jt = (time.perf_counter_ns() - t0)/1e6
 
+<<<<<<< HEAD
+=======
+            # Exponential Iteratif
+>>>>>>> jevan
             t0 = time.perf_counter_ns()
-            _, ei_steps = exponential_iter(arr, key)
-            ei_time = (time.perf_counter_ns() - t0) / 1_000_000
+            _, ei = exponential_iterative(arr, key)
+            eit = (time.perf_counter_ns() - t0)/1e6
 
+<<<<<<< HEAD
+=======
+            # Exponential Rekursif
+>>>>>>> jevan
             t0 = time.perf_counter_ns()
-            _, er_steps = exponential_rec(arr, key)
-            er_time = (time.perf_counter_ns() - t0) / 1_000_000
+            _, er = exponential_recursive(arr, key)
+            ert = (time.perf_counter_ns() - t0)/1e6
 
-            results[case] = [
-                ("Jump Search", js_steps, js_time),
-                ("Exponential Iteratif", ei_steps, ei_time),
-                ("Exponential Rekursif", er_steps, er_time)
-            ]
+            results.append({
+                "case": case,
+                "jump": (js, jt),
+                "exp_it": (ei, eit),
+                "exp_rec": (er, ert)
+            })
 
+<<<<<<< HEAD
         labels = list(cases.keys())
         iter_times = [results[c][1][2] for c in labels]
         rec_times = [results[c][2][2] for c in labels]
+=======
+        # ---------------- GRAFIK ----------------
+        labels = [r["case"] for r in results]
+>>>>>>> jevan
 
+        # Grafik 1: Exponential Iteratif vs Rekursif
         plt.figure()
-        plt.plot(labels, iter_times, marker='o', label="Iteratif")
-        plt.plot(labels, rec_times, marker='o', label="Rekursif")
+        plt.plot(labels, [r["exp_it"][1] for r in results], label="Exponential Iteratif")
+        plt.plot(labels, [r["exp_rec"][1] for r in results], label="Exponential Rekursif")
         plt.legend()
-        plt.title("Exponential Search: Iteratif vs Rekursif")
         plt.ylabel("Waktu (ms)")
-        plt.savefig("static/exp_iter_vs_rec.png")
+        plt.title("Exponential Iteratif vs Rekursif")
+        plt.savefig("static/exp_compare.png")
         plt.close()
 
+<<<<<<< HEAD
         jump_times = [results[c][0][2] for c in labels]
 
+=======
+        # Grafik 2: Jump vs Exponential Iteratif
+>>>>>>> jevan
         plt.figure()
-        plt.plot(labels, jump_times, marker='o', label="Jump Search")
-        plt.plot(labels, iter_times, marker='o', label="Exponential Iteratif")
-        plt.plot(labels, rec_times, marker='o', label="Exponential Rekursif")
+        plt.plot(labels, [r["jump"][1] for r in results], label="Jump Search")
+        plt.plot(labels, [r["exp_it"][1] for r in results], label="Exponential Iteratif")
         plt.legend()
-        plt.title("Perbandingan Semua Algoritma")
         plt.ylabel("Waktu (ms)")
-        plt.savefig("static/compare_all.png")
+        plt.title("Jump Search vs Exponential Iteratif")
+        plt.savefig("static/jump_vs_exp.png")
         plt.close()
 
     return render_template("index.html", results=results)
 
 if __name__ == "__main__":
+    os.makedirs("static", exist_ok=True)
     app.run(debug=True)
