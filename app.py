@@ -7,8 +7,6 @@ import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 
-# ---------------- ALGORITMA ----------------
-
 def jump_search(arr, key):
     n = len(arr)
     step = int(math.sqrt(n))
@@ -82,8 +80,6 @@ def exponential_rec(arr, key):
     binary_search_rec(arr, i//2, min(i, len(arr)-1), key, steps)
     return -1, steps[0]
 
-# ---------------- ROUTE ----------------
-
 @app.route("/", methods=["GET", "POST"])
 def index():
     results = None
@@ -101,17 +97,14 @@ def index():
         results = {}
 
         for case, key in cases.items():
-            # Jump
             t0 = time.perf_counter_ns()
             _, js_steps = jump_search(arr, key)
             js_time = (time.perf_counter_ns() - t0) / 1_000_000
 
-            # Exponential Iter
             t0 = time.perf_counter_ns()
             _, ei_steps = exponential_iter(arr, key)
             ei_time = (time.perf_counter_ns() - t0) / 1_000_000
 
-            # Exponential Rec
             t0 = time.perf_counter_ns()
             _, er_steps = exponential_rec(arr, key)
             er_time = (time.perf_counter_ns() - t0) / 1_000_000
@@ -122,7 +115,6 @@ def index():
                 ("Exponential Rekursif", er_steps, er_time)
             ]
 
-        # Grafik 1: Iteratif vs Rekursif
         labels = list(cases.keys())
         iter_times = [results[c][1][2] for c in labels]
         rec_times = [results[c][2][2] for c in labels]
@@ -136,7 +128,6 @@ def index():
         plt.savefig("static/exp_iter_vs_rec.png")
         plt.close()
 
-        # Grafik 2: Semua Algoritma
         jump_times = [results[c][0][2] for c in labels]
 
         plt.figure()
