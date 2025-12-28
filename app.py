@@ -2,13 +2,11 @@ from flask import Flask, render_template, request
 import time
 import math
 import matplotlib
-matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import os
+matplotlib.use("Agg")
 
 app = Flask(__name__)
-
-# ================= ALGORITMA =================
 
 def jump_search(arr, key):
     n = len(arr)
@@ -82,8 +80,6 @@ def exponential_search_recursive(arr, key):
     binary_search_recursive(arr, i // 2, min(i, n - 1), key, counter)
     return counter[0]
 
-# ================= ROUTE =================
-
 @app.route("/", methods=["GET", "POST"])
 def index():
     results = None
@@ -100,17 +96,14 @@ def index():
         results = {}
 
         for case, key in cases.items():
-            # Jump Search
             start = time.perf_counter_ns()
             js_steps = jump_search(arr, key)
             js_time = (time.perf_counter_ns() - start) / 1_000_000
 
-            # Exponential Iteratif
             start = time.perf_counter_ns()
             ei_steps = exponential_search_iterative(arr, key)
             ei_time = (time.perf_counter_ns() - start) / 1_000_000
 
-            # Exponential Rekursif
             start = time.perf_counter_ns()
             er_steps = exponential_search_recursive(arr, key)
             er_time = (time.perf_counter_ns() - start) / 1_000_000
@@ -121,7 +114,6 @@ def index():
                 ("Exponential Rekursif", er_steps, er_time)
             ]
 
-        # ========== GRAFIK ==========
         labels = list(cases.keys())
 
         ei_times = [results[c][1][2] for c in labels]
