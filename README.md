@@ -1,9 +1,3 @@
-Baik 👍
-Berikut **README.md FINAL** yang **fokus utamanya adalah cara menjalankan website**, ditulis **jelas, runtut, dan sesuai standar tugas besar (tubes)**.
-Tinggal **copy–paste** ke file `README.md`.
-
----
-
 # 📊 Perbandingan Jump Search dan Exponential Search
 
 Website ini merupakan aplikasi sederhana berbasis **Python (Flask)** yang digunakan untuk membandingkan performa algoritma **Jump Search** dan **Exponential Search** pada data terurut, berdasarkan:
