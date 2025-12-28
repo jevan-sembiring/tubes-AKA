@@ -137,13 +137,3 @@ http://127.0.0.1:5000
 * Fokus analisis ada pada **pola perbandingan**, bukan nilai absolut waktu
 
 ---
-
-## 🎓 Tujuan Akademik
-
-Aplikasi ini dirancang untuk:
-
-* Menganalisis kompleksitas algoritma pencarian
-* Membandingkan efisiensi Jump Search dan Exponential Search
-* Memenuhi ketentuan tugas:
-
-  > *Satu algoritma diturunkan ke dalam dua pendekatan (iteratif dan rekursif)*
