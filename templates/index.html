@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jump vs Exponential Search</title>
+</head>
+<body>
+<h2>Perbandingan Jump Search dan Exponential Search</h2>
+
+<form method="post">
+    Masukkan n:
+    <input type="number" name="n" min="1" required>
+    <button type="submit">Proses</button>
+</form>
+
+{% if results %}
+{% for case, rows in results.items() %}
+<h3>{{ case }}</h3>
+<table border="1" cellpadding="5">
+<tr>
+    <th>Algoritma</th><th>Langkah</th><th>Waktu (ms)</th>
+</tr>
+{% for r in rows %}
+<tr>
+    <td>{{ r[0] }}</td>
+    <td>{{ r[1] }}</td>
+    <td>{{ "%.5f"|format(r[2]) }}</td>
+</tr>
+{% endfor %}
+</table>
+{% endfor %}
+
+<h3>Grafik</h3>
+<img src="{{ url_for('static', filename='exp_iter_vs_rec.png') }}"><br><br>
+<img src="{{ url_for('static', filename='compare_all.png') }}">
+{% endif %}
+</body>
+</html>
