@@ -1,37 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Jump vs Exponential Search</title>
+<title>Perbandingan Algoritma</title>
+<style>
+body { background:#e3f2fd; font-family:Arial; }
+table { border-collapse:collapse; width:90%; margin:auto; }
+th,td { border:1px solid #333; padding:8px; text-align:center; }
+</style>
 </head>
 <body>
-<h2>Perbandingan Jump Search dan Exponential Search</h2>
 
-<form method="post">
+<h2 align="center">Perbandingan Jump Search & Exponential Search</h2>
+
+<form method="post" align="center">
     Masukkan n:
     <input type="number" name="n" min="1" required>
     <button type="submit">Proses</button>
 </form>
 
 {% if results %}
-{% for case, rows in results.items() %}
-<h3>{{ case }}</h3>
-<table border="1" cellpadding="5">
+<table>
 <tr>
-    <th>Algoritma</th><th>Langkah</th><th>Waktu (ms)</th>
+<th>Case</th>
+<th>Jump (Langkah, ms)</th>
+<th>Exp Iteratif (Langkah, ms)</th>
+<th>Exp Rekursif (Langkah, ms)</th>
 </tr>
-{% for r in rows %}
+{% for r in results %}
 <tr>
-    <td>{{ r[0] }}</td>
-    <td>{{ r[1] }}</td>
-    <td>{{ "%.5f"|format(r[2]) }}</td>
+<td>{{ r.case }}</td>
+<td>{{ r.jump[0] }}, {{ "%.5f"|format(r.jump[1]) }}</td>
+<td>{{ r.exp_it[0] }}, {{ "%.5f"|format(r.exp_it[1]) }}</td>
+<td>{{ r.exp_rec[0] }}, {{ "%.5f"|format(r.exp_rec[1]) }}</td>
 </tr>
 {% endfor %}
 </table>
-{% endfor %}
 
-<h3>Grafik</h3>
-<img src="{{ url_for('static', filename='exp_iter_vs_rec.png') }}"><br><br>
-<img src="{{ url_for('static', filename='compare_all.png') }}">
+<h3 align="center">Grafik Exponential Iteratif vs Rekursif</h3>
+<img src="/static/exp_compare.png" width="600">
+
+<h3 align="center">Grafik Jump Search vs Exponential Iteratif</h3>
+<img src="/static/jump_vs_exp.png" width="600">
 {% endif %}
+
 </body>
 </html>
