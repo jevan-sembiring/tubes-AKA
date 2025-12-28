@@ -1,47 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Perbandingan Algoritma</title>
-<style>
-body { background:#e3f2fd; font-family:Arial; }
-table { border-collapse:collapse; width:90%; margin:auto; }
-th,td { border:1px solid #333; padding:8px; text-align:center; }
-</style>
+    <title>Perbandingan Jump dan Exponential Search</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 
-<h2 align="center">Perbandingan Jump Search & Exponential Search</h2>
+<div class="container">
+    <h1>Perbandingan Jump Search dan Exponential Search</h1>
 
-<form method="post" align="center">
-    Masukkan n:
-    <input type="number" name="n" min="1" required>
-    <button type="submit">Proses</button>
-</form>
+    <form method="post">
+        <label>Masukkan jumlah data terurut (n):</label>
+        <input type="number" name="n" min="1" required>
+        <button type="submit">Proses</button>
+    </form>
 
-{% if results %}
-<table>
-<tr>
-<th>Case</th>
-<th>Jump (Langkah, ms)</th>
-<th>Exp Iteratif (Langkah, ms)</th>
-<th>Exp Rekursif (Langkah, ms)</th>
-</tr>
-{% for r in results %}
-<tr>
-<td>{{ r.case }}</td>
-<td>{{ r.jump[0] }}, {{ "%.5f"|format(r.jump[1]) }}</td>
-<td>{{ r.exp_it[0] }}, {{ "%.5f"|format(r.exp_it[1]) }}</td>
-<td>{{ r.exp_rec[0] }}, {{ "%.5f"|format(r.exp_rec[1]) }}</td>
-</tr>
-{% endfor %}
-</table>
+    {% if results %}
+        {% for case, rows in results.items() %}
+        <h2>{{ case }}</h2>
+        <table>
+            <tr>
+                <th>Algoritma</th>
+                <th>Langkah</th>
+                <th>Waktu (ms)</th>
+            </tr>
+            {% for r in rows %}
+            <tr>
+                <td>{{ r[0] }}</td>
+                <td>{{ r[1] }}</td>
+                <td>{{ "%.5f"|format(r[2]) }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endfor %}
 
-<h3 align="center">Grafik Exponential Iteratif vs Rekursif</h3>
-<img src="/static/exp_compare.png" width="600">
-
-<h3 align="center">Grafik Jump Search vs Exponential Iteratif</h3>
-<img src="/static/jump_vs_exp.png" width="600">
-{% endif %}
+        <h2>Grafik Perbandingan</h2>
+        <img src="/static/exp_compare.png">
+        <img src="/static/jump_vs_exp.png">
+    {% endif %}
+</div>
 
 </body>
 </html>
