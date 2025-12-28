@@ -69,20 +69,6 @@ def exponential_search_recursive(arr, key):
     if arr[0] == key:
         return 1
 
-<<<<<<< HEAD
-=======
-    steps = 1
-    i = 1
-    n = len(arr)
-    while i < n and arr[i] <= key:
-        steps += 1
-        i *= 2
-
-    counter = [steps]
-    binary_search_recursive(arr, i // 2, min(i, n - 1), key, counter)
-    return counter[0]
-
->>>>>>> jevan
 @app.route("/", methods=["GET", "POST"])
 def index():
     results = None
@@ -99,7 +85,6 @@ def index():
         results = {}
 
         for case, key in cases.items():
-<<<<<<< HEAD
             t0 = time.perf_counter_ns()
             _, js = jump_search(arr, key)
             jt = (time.perf_counter_ns() - t0)/1e6
@@ -111,19 +96,6 @@ def index():
             t0 = time.perf_counter_ns()
             _, er = exponential_recursive(arr, key)
             ert = (time.perf_counter_ns() - t0)/1e6
-=======
-            start = time.perf_counter_ns()
-            js_steps = jump_search(arr, key)
-            js_time = (time.perf_counter_ns() - start) / 1_000_000
-
-            start = time.perf_counter_ns()
-            ei_steps = exponential_search_iterative(arr, key)
-            ei_time = (time.perf_counter_ns() - start) / 1_000_000
-
-            start = time.perf_counter_ns()
-            er_steps = exponential_search_recursive(arr, key)
-            er_time = (time.perf_counter_ns() - start) / 1_000_000
->>>>>>> jevan
 
             results[case] = [
                 ("Jump Search", js_steps, js_time),
@@ -132,17 +104,8 @@ def index():
             ]
 
         labels = list(cases.keys())
-<<<<<<< HEAD
         iter_times = [results[c][1][2] for c in labels]
         rec_times = [results[c][2][2] for c in labels]
-=======
-
-        ei_times = [results[c][1][2] for c in labels]
-        er_times = [results[c][2][2] for c in labels]
-        js_times = [results[c][0][2] for c in labels]
-
-        os.makedirs("static", exist_ok=True)
->>>>>>> jevan
 
         plt.figure()
         plt.plot(labels, ei_times, marker="o", label="Exponential Iteratif")
@@ -153,11 +116,8 @@ def index():
         plt.savefig("static/exp_compare.png")
         plt.close()
 
-<<<<<<< HEAD
         jump_times = [results[c][0][2] for c in labels]
 
-=======
->>>>>>> jevan
         plt.figure()
         plt.plot(labels, js_times, marker="o", label="Jump Search")
         plt.plot(labels, ei_times, marker="o", label="Exponential Iteratif")
