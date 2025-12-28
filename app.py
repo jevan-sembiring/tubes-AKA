@@ -82,18 +82,10 @@ def index():
             _, js = jump_search(arr, key)
             jt = (time.perf_counter_ns() - t0)/1e6
 
-<<<<<<< HEAD
-=======
-            # Exponential Iteratif
->>>>>>> jevan
             t0 = time.perf_counter_ns()
             _, ei = exponential_iterative(arr, key)
             eit = (time.perf_counter_ns() - t0)/1e6
 
-<<<<<<< HEAD
-=======
-            # Exponential Rekursif
->>>>>>> jevan
             t0 = time.perf_counter_ns()
             _, er = exponential_recursive(arr, key)
             ert = (time.perf_counter_ns() - t0)/1e6
@@ -105,16 +97,10 @@ def index():
                 "exp_rec": (er, ert)
             })
 
-<<<<<<< HEAD
         labels = list(cases.keys())
         iter_times = [results[c][1][2] for c in labels]
         rec_times = [results[c][2][2] for c in labels]
-=======
-        # ---------------- GRAFIK ----------------
-        labels = [r["case"] for r in results]
->>>>>>> jevan
 
-        # Grafik 1: Exponential Iteratif vs Rekursif
         plt.figure()
         plt.plot(labels, [r["exp_it"][1] for r in results], label="Exponential Iteratif")
         plt.plot(labels, [r["exp_rec"][1] for r in results], label="Exponential Rekursif")
@@ -124,12 +110,8 @@ def index():
         plt.savefig("static/exp_compare.png")
         plt.close()
 
-<<<<<<< HEAD
         jump_times = [results[c][0][2] for c in labels]
 
-=======
-        # Grafik 2: Jump vs Exponential Iteratif
->>>>>>> jevan
         plt.figure()
         plt.plot(labels, [r["jump"][1] for r in results], label="Jump Search")
         plt.plot(labels, [r["exp_it"][1] for r in results], label="Exponential Iteratif")
