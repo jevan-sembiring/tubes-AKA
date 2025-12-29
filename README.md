@@ -24,7 +24,7 @@ Aplikasi ini dibuat untuk memenuhi kebutuhan **Tugas Besar Analisis Kompleksitas
 * Grafik:
 
   1. Perbandingan Exponential Search Iteratif vs Rekursif
-  2. Perbandingan Jump Search vs Exponential Search
+  2. Perbandingan Jump Search vs Exponential Search (iteratif)
 
 ---
 
@@ -33,7 +33,7 @@ Aplikasi ini dibuat untuk memenuhi kebutuhan **Tugas Besar Analisis Kompleksitas
 * Python 3
 * Flask
 * Matplotlib
-* HTML (Jinja2 Template)
+* HTML
 
 ---
 
